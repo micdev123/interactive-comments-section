@@ -58,9 +58,9 @@
                             <div class="reply_content">
                             <div class="reply_head">
                                 <div>
-                                <img src="./images/avatars/image-amyrobson.png" alt="" class="img">
-                                <p class="name">amyrobson <span>You</span></p>
-                                <p class="date">1 month ago</p>
+                                    <img src="./images/avatars/image-amyrobson.png" alt="" class="img">
+                                    <p class="name">amyrobson <span>You</span></p>
+                                    <p class="date">1 month ago</p>
                                 </div>
                                 <div class="btns">
                                 <div class="delete">
