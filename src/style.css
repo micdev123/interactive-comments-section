@@ -127,6 +127,10 @@ body {
 }
 
 
+.delete_modal.visible {
+    display: block;
+}
+
 
 .comment_contents,
 .comment_form,

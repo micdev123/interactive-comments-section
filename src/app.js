@@ -384,7 +384,6 @@ const displayStoredComment = () => {
 
 
 
-
 const toggleReplyForm = () => {
     document.querySelectorAll('.reply_btn').forEach((toggleForm) => {
         toggleForm.addEventListener('click', (e) => {
@@ -837,6 +836,7 @@ const commentActions = () => {
         })
     })
 }
+
 
 
 
