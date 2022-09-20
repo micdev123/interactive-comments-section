@@ -70,9 +70,10 @@ const data = {
 window.addEventListener('DOMContentLoaded', () => {
     displayContents();
     handleComment();
-    displayStoredComment()
-    toggleReplyForm()
-    displayReplies()
+    displayStoredComment();
+    toggleReplyForm();
+    displayReplies();
+    commentActions();
 });
 
 const comments_container1 = document.querySelector('.original');
@@ -92,13 +93,13 @@ const displayContents = () => {
         <div class="comment" id=${content.user.username}>
             <div class="comment_contents">
                 <!-- Scores -->
-                <div class="scores">
+                <div class="scores_big">
                     <div class="upvote">
-                        <img src="./images/icon-plus.svg" alt="plus">
+                        <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn_'>
                     </div>
                     <p class="score">${content.score}</p>
                     <div class="downvote">
-                        <img src="./images/icon-minus.svg" alt="">
+                        <img src="./images/icon-minus.svg" alt="" class="downvote_btn_">
                     </div>
                 </div>
                 <!-- Comment Content -->
@@ -121,6 +122,21 @@ const displayContents = () => {
                         </p>
                     </div>
                 </div>
+                <div class="mobile_view">
+                    <div class="scores_mobile">
+                        <div class="upvote">
+                            <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn_'>
+                        </div>
+                        <p class="score">${content.score}</p>
+                        <div class="downvote">
+                            <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
+                        </div>
+                    </div>
+                    <div class="reply_btn">
+                        <img src="./images/icon-reply.svg" alt="reply_btn" class="img_reply">
+                        <p>Reply</p>
+                    </div>
+                </div>
             </div>
             <div class="reply_form">
                 <form action="" class="form replyForm">
@@ -139,13 +155,13 @@ const displayContents = () => {
                             ${content.replies.map((reply) => (`
                                 <div class="reply" id=${reply.user.username}>
                                     <div class="reply_contents">
-                                        <div class="scores">
+                                        <div class="scores_big">
                                             <div class="upvote">
-                                                <img src="./images/icon-plus.svg" alt="plus">
+                                                <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn_'>
                                             </div>
                                             <p class="score">${reply.score}</p>
                                             <div class="downvote">
-                                                <img src="./images/icon-minus.svg" alt="">
+                                                <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
                                             </div>
                                         </div>
                                         <div class="reply_content">
@@ -160,10 +176,25 @@ const displayContents = () => {
                                                     <p>Reply</p>
                                                 </div>
                                             </div>
-                                            <div class="rely_body">
+                                            <div class="reply_body">
                                                 <p>
                                                     <span>@${reply.replyingTo}</span> ${reply.content}
                                                 </p>
+                                            </div>
+                                        </div>
+                                        <div class="mobile_view">
+                                            <div class="scores_mobile">
+                                                <div class="upvote">
+                                                    <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn_'>
+                                                </div>
+                                                <p class="score">${content.score}</p>
+                                                <div class="downvote">
+                                                    <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
+                                                </div>
+                                            </div>
+                                            <div class="reply_btn">
+                                                <img src="./images/icon-reply.svg" alt="reply_btn" class="img_reply">
+                                                <p>Reply</p>
                                             </div>
                                         </div>  
                                     </div>
@@ -189,8 +220,6 @@ const displayContents = () => {
                 
             </div>
 
-           
-
         </div>  
         `
     })
@@ -204,8 +233,13 @@ const displayContents = () => {
             <!-- Textarea -->
             <textarea name="" id="comment_text" placeholder="Add a comment..." required ></textarea>
             <button type="submit" class="send">send</button>
+            <div class="mobile_view">
+                <img src=${data.currentUser.image.png} class="commenter img" alt="">
+                <button type="submit" class="send">send</button>
+            </div>
         </form>
     `
+
 }
 
 
@@ -262,13 +296,13 @@ const displayStoredComment = () => {
         <div class="comment">
             <div class="comment_contents">
                 <!-- Scores -->
-                <div class="scores">
+                <div class="scores_big">
                     <div class="upvote">
-                        <img src="./images/icon-plus.svg" alt="plus">
+                        <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn' id=${index}>
                     </div>
                     <p class="score">${content.scores}</p>
                     <div class="downvote">
-                        <img src="./images/icon-minus.svg" alt="">
+                        <img src="./images/icon-minus.svg" alt="" class='downvote_btn' id=${index}>
                     </div>
                 </div>
                 <!-- Comment Content -->
@@ -280,14 +314,14 @@ const displayStoredComment = () => {
                             <p class="date">${content.timestamps}</p>
                         </div>
                         <div class="btns">
-                            <div class="delete" id=${index}>
+                            <p class="comment_delete" id=${index}>
                                 <img src="./images/icon-delete.svg" alt="delete_btn" class="img_btn">
-                                <p>Delete</p>
-                            </div>
-                            <div class="edit" id=${index}>
+                                Delete
+                            </p>
+                            <p class="comment_edit" id=${index}>
                                 <img src="./images/icon-edit.svg" alt="edit_btn" class="img_btn">
-                                <p>Edit</p>
-                            </div>
+                                Edit
+                            </p>
                         </div> 
                     </div>
                     <!-- Comment Body -->
@@ -295,6 +329,36 @@ const displayStoredComment = () => {
                         <p>
                             ${content.comment}
                         </p>
+                    </div>
+                    <!-- Update Form -->
+                    <div class="update_form">
+                        <form action="" class="form updateForm">
+                            <!-- Textarea -->
+                            <textarea name="" class="update_text" placeholder="Write something..."></textarea>
+                            <input type="hidden" class="edited_content">
+                            <button type="submit" class="update__btn">Update</button>
+                        </form>
+                    </div>
+                    <div class="mobile_view">
+                        <div class="scores_mobile">
+                            <div class="upvote">
+                                <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn' id=${index}>
+                            </div>
+                            <p class="score">${content.scores}</p>
+                            <div class="downvote">
+                                <img src="./images/icon-minus.svg" alt="" class='downvote_btn' id=${index}>
+                            </div>
+                        </div>
+                        <div class="btns">
+                            <p class="comment_delete" id=${index}>
+                                <img src="./images/icon-delete.svg" alt="delete_btn" class="img_btn">
+                                Delete
+                            </p>
+                            <p class="comment_edit" id=${index}>
+                                <img src="./images/icon-edit.svg" alt="edit_btn" class="img_btn">
+                                Edit
+                            </p>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -307,15 +371,7 @@ const displayStoredComment = () => {
                     <button type="submit" class="reply__btn">Reply</button>
                 </form>
             </div>
-            <!-- Update Form -->
-            <div class="update_form">
-                <form action="" class="form updateForm">
-                    <img src=${data.currentUser.image.png} class="commenter img" alt="">
-                    <!-- Textarea -->
-                    <textarea name="" id="" placeholder="Write something..."></textarea>
-                    <button type="submit" class="update__btn">Update</button>
-                </form>
-            </div>
+            
         </div>
         `
     });
@@ -341,6 +397,7 @@ const toggleReplyForm = () => {
             // Target current reply-form-btn
             parent.querySelector('.reply_form').classList.toggle('visible')
 
+            // Creating replies
             if (parent.querySelector('.reply_form').classList.contains('visible')) {
                 parent.querySelector('.replyForm').addEventListener('submit', (e) => {
                     e.preventDefault()
@@ -369,15 +426,21 @@ const toggleReplyForm = () => {
 
                         // Push data to storage
                         if (storedReplies) {
+                            // Add replies
                             storedReplies.push(replyData);
 
-                            // Store comment
+                            // Store replies
                             localStorage.setItem('replies_for_' + parent.id, JSON.stringify(storedReplies));
 
+                            // Reset inputText value
                             inputText.value = '';
                         }
                         // displayStoredComment()
-                        parent.querySelector('.reply_form').classList.remove('visible')
+                        // Remove the visible class
+                        parent.querySelector('.reply_form').classList.remove('visible');
+
+                        // Display replies
+                        displayReplies()
                     }
                      
                     
@@ -389,7 +452,7 @@ const toggleReplyForm = () => {
         })
     })
 
-    
+
 }
 
 
@@ -399,9 +462,10 @@ const displayReplies = () => {
         const parent_element = parent.parentElement.parentElement.parentElement.parentElement
         // console.log(parent_element);
         replies(parent_element)
-        commentActions(parent_element)
+        replyActions(parent_element)
     })
 }
+
 
 const replies = (parent) => {
     // console.log(parent);
@@ -414,15 +478,15 @@ const replies = (parent) => {
             if (reply.replyingTo === parent.id) {
                 // Target parent child reply container to output replies
                 return`
-                <div class="reply" id=''>
+                <div class="reply" id=${reply.replyingTo}>
                     <div class="reply_contents">
-                        <div class="scores">
+                        <div class="scores_big">
                             <div class="upvote">
-                                <img src="./images/icon-plus.svg" alt="plus">
+                                <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn' id=${index}>
                             </div>
                             <p class="score">${reply.scores}</p>
                             <div class="downvote">
-                                <img src="./images/icon-minus.svg" alt="">
+                                <img src="./images/icon-minus.svg" alt="" class='downvote_btn' id=${index}>
                             </div>
                         </div>
                         <div class="reply_content">
@@ -433,30 +497,53 @@ const replies = (parent) => {
                                     <p class="date">${reply.timestamps}</p>
                                 </div>
                                 <div class="btns">
-                                    <div class="delete" id=${index}>
+                                    <p class="reply_delete" id=${index}>
                                         <img src="./images/icon-delete.svg" alt="delete_btn" class="img_btn">
-                                        <p>Delete</p>
-                                    </div>
-                                    <div class="edit" id=${index}>
+                                        Delete
+                                    </p>
+                                    <p class="reply_edit" id=${index}>
                                         <img src="./images/icon-edit.svg" alt="edit_btn" class="img_btn">
-                                        <p>Edit</p>
-                                    </div>
+                                        Edit
+                                    </p>
                                 </div>
                             </div>
-                            <div class="rely_body">
+                            <div class="reply_body">
                                 <p>
                                     <span>@${reply.replyingTo}</span> ${reply.reply}
                                 </p>
                             </div>
+
+                            <div class="update_form">
+                                <form action="" class="form updateForm">
+                                    <!-- Textarea -->
+                                    <textarea name="" class="update_text" placeholder="Write something..."></textarea>
+                                    <input type="hidden" class="edited_content">
+                                    <button type="submit" class="update__btn">Update</button>
+                                </form>
+                            </div>
+
+                            <div class="mobile_view">
+                                <div class="scores_mobile">
+                                    <div class="upvote">
+                                        <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn' id=${index}>
+                                    </div>
+                                    <span class="score">${reply.scores}</span>
+                                    <div class="downvote">
+                                        <img src="./images/icon-minus.svg" alt="" class='downvote_btn' id=${index}>
+                                    </div>
+                                </div>
+                                <div class="btns">
+                                    <p class="reply_delete" id=${index}>
+                                        <img src="./images/icon-delete.svg" alt="delete_btn" class="img_btn">
+                                        Delete
+                                    </p>
+                                    <p class="reply_edit" id=${index}>
+                                        <img src="./images/icon-edit.svg" alt="edit_btn" class="img_btn">
+                                        Edit
+                                    </p>
+                                </div>
+                            </div>
                         </div>  
-                    </div>
-                    <div class="update_form">
-                        <form action="" class="form updateForm">
-                            <img src=${data.currentUser.image.png} class="commenter img" alt="">
-                            <!-- Textarea -->
-                            <textarea name="" id="" placeholder="Write something..."></textarea>
-                            <button type="submit" class="update__btn">Update</button>
-                        </form>
                     </div>
                 </div>`
             }
@@ -473,26 +560,285 @@ const replies = (parent) => {
         }
         
     }
-
-    
-
     
 }
 
 
-const commentActions = (parent) => {
+const replyActions = (parent) => {
     // console.log(parent);
-    const storedReplies = JSON.parse(localStorage.getItem('replies_for_' + parent.id)) || [];
-    storedReplies.map((reply) => {
-        parent.querySelectorAll('.edit').forEach((edit_btn) => {
-            edit_btn.addEventListener('click', (e) => {
-                console.log(e.target);
-            })
-        });
-    })
     
+    const storedReplies = JSON.parse(localStorage.getItem('replies_for_' + parent.id)) || [];
+
+    // Reply edit
+    parent.querySelectorAll('.reply_edit').forEach((edit_btn) => {
+        edit_btn.addEventListener('click', (e) => {
+            let target_index = e.target
+            // console.log(e.target);
+            // Target top parent element
+            let parent_container = target_index.parentElement.parentElement.parentElement.parentElement.parentElement
+            // console.log(parent_container);
+
+            let target_reply_body = target_index.parentElement.parentElement.parentElement.parentElement.querySelector('.reply_body')
+            // console.log(target_reply_contents);
+
+            // Target current update-form
+            parent_container.querySelector('.update_form').classList.toggle('visible')
+
+            if (parent_container.querySelector('.update_form').classList.contains('visible')) {
+                target_reply_body.style.display = 'none'
+
+                let textarea_input = parent_container.querySelector('.update_text')
+                textarea_input.value = storedReplies[target_index.id].reply
+
+                parent_container.querySelector('.updateForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    let saveIndex = parent_container.querySelector(".edited_content");
+                    saveIndex = textarea_input.value
+                    
+                    storedReplies[target_index.id].reply = saveIndex;
+
+                    // Store updated replies
+                    localStorage.setItem('replies_for_' + parent.id, JSON.stringify(storedReplies));
+
+                    // Reset textarea_input value
+                    textarea_input.value = '';
+
+                    // Setting back target_reply_body display style to block
+                    target_reply_body.style.display = 'block'
+
+                    // Remove visible class from the update form
+                    parent_container.querySelector('.update_form').classList.remove('visible')
+
+                    // Call the displayReplies() fnx
+                    displayReplies()
+                })
+            }
+            else {
+                // Setting back target_reply_body display style to block
+                target_reply_body.style.display = 'block'
+            }
+        })
+    });
+
+    // Reply delete
+    parent.querySelectorAll('.reply_delete').forEach((trash_btn) => {
+        trash_btn.addEventListener('click', (e) => {
+            let target_index_delete = e.target
+            // console.log(e.target);
+            // Target top parent element
+            document.querySelector('.delete_modal').style.display = 'block'
+
+            // Delete modal cancel btn
+            document.querySelector('.cancel').addEventListener('click', () => {
+                // Set modal display to none
+                 document.querySelector('.delete_modal').style.display = 'none'
+            })
+           
+
+            // Delete modal continue btn
+            document.querySelector('.continue').addEventListener('click', () => {
+                // console.log('yes');
+                storedReplies.splice(target_index_delete.id, 1);
+
+                // Store updated replies
+                localStorage.setItem('replies_for_' + parent.id, JSON.stringify(storedReplies));
+
+                // Set modal display to none
+                document.querySelector('.delete_modal').style.display = 'none'
+
+                // Call the displayReplies() fnx
+                displayReplies()
+            })
+            displayReplies()
+
+        })
+    });
+
+    // Upvote scores
+    parent.querySelectorAll('.upvote_btn').forEach((add_scores) => {
+        add_scores.addEventListener('click', (e) => {
+            // console.log(e.target);
+            let target_upvote = e.target
+            let target_scores = target_upvote.parentElement.parentElement.querySelector('.score')
+            // console.log(target_scores);
+
+            storedReplies[target_upvote.id].scores += 1;
+            // Store updated replies
+            localStorage.setItem('replies_for_' + parent.id, JSON.stringify(storedReplies));
+            target_scores.textContent = storedReplies[target_upvote.id].scores
+        })
+    })
+
+    // Downvote scores
+    parent.querySelectorAll('.downvote_btn').forEach((reduce_scores) => {
+        reduce_scores.addEventListener('click', (e) => {
+            let target_downvote = e.target
+            let target_scores = target_downvote.parentElement.parentElement.querySelector('.score')
+            // console.log(target_scores);
+
+            if (storedReplies[target_downvote.id].scores > 0) {
+                storedReplies[target_downvote.id].scores -= 1;
+                // Store updated replies
+                localStorage.setItem('replies_for_' + parent.id, JSON.stringify(storedReplies));
+                target_scores.textContent = storedReplies[target_downvote.id].scores
+            }
+            
+        })
+    })
+
     
 }
+
+
+const commentActions = () => {
+    // Getting comments from the local storage
+    const storedComment = JSON.parse(localStorage.getItem('comments')) || [];
+
+    // Comment edit
+    document.querySelectorAll('.comment_edit').forEach((comment_edit_btn) => {
+        comment_edit_btn.addEventListener('click', (e) => {
+            let target_btn_index = e.target
+            // console.log(e.target);
+            // Target top parent element
+            let parent_container = target_btn_index.parentElement.parentElement.parentElement
+            console.log(parent_container);
+
+            let target_comment_body = parent_container.querySelector('.comment_body')
+            // console.log(target_comment_body);
+
+            // Target current update-form
+            parent_container.querySelector('.update_form').classList.toggle('visible')
+
+            if (parent_container.querySelector('.update_form').classList.contains('visible')) {
+                target_comment_body.style.display = 'none'
+
+                let textarea_input = parent_container.querySelector('.update_text')
+                textarea_input.value = storedComment[target_btn_index.id].comment
+
+                parent_container.querySelector('.updateForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    let saveIndex = parent_container.querySelector(".edited_content");
+                    saveIndex = textarea_input.value
+                    
+                    storedComment[target_btn_index.id].comment = saveIndex;
+
+                    // Store updated comment
+                    localStorage.setItem('comments', JSON.stringify(storedComment));
+
+                    // Reset textarea_input value
+                    textarea_input.value = '';
+
+                    // Setting back target_reply_body display style to block
+                    target_comment_body.style.display = 'block'
+
+                    // Remove visible class from the update form
+                    parent_container.querySelector('.update_form').classList.remove('visible')
+
+                    // Call the displayStoredComment() fnx
+                    displayStoredComment()
+                })
+            }
+            else {
+                // Setting back target_reply_body display style to block
+                target_comment_body.style.display = 'block'
+            }
+        })
+    });
+    
+    
+    // Comment delete
+    document.querySelectorAll('.comment_delete').forEach((trash_btn) => {
+        trash_btn.addEventListener('click', (e) => {
+            let target_index_delete = e.target
+            // console.log(e.target);
+            // Target top parent element
+            document.querySelector('.delete_modal').style.display = 'block'
+
+            // Delete modal cancel btn
+            document.querySelector('.cancel').addEventListener('click', () => {
+                // Set modal display to none
+                 document.querySelector('.delete_modal').style.display = 'none'
+            })
+           
+
+            // Delete modal continue btn
+            document.querySelector('.continue').addEventListener('click', () => {
+                // console.log('yes');
+                storedComment.splice(target_index_delete.id, 1);
+
+                // Store updated comment
+                localStorage.setItem('comments', JSON.stringify(storedComment));
+
+                // Set modal display to none
+                document.querySelector('.delete_modal').style.display = 'none'
+
+                 // Call the displayStoredComment() fnx
+                displayStoredComment()
+            })
+            
+            // Call the displayStoredComment() fnx
+            displayStoredComment()
+
+        })
+    });
+
+    // Comment upvote scores
+    document.querySelectorAll('.upvote_btn').forEach((add_scores) => {
+        add_scores.addEventListener('click', (e) => {
+            let target_upvote_btn = e.target
+            let target_scores = target_upvote_btn.parentElement.parentElement.querySelector('.score')
+            // console.log(target_scores);
+            storedComment[target_upvote_btn.id].scores += 1;
+
+            // Store updated scores
+            localStorage.setItem('comments', JSON.stringify(storedComment));
+
+            target_scores.textContent = storedComment[target_upvote_btn.id].scores;
+        })
+    })
+
+    // Comment downvote scores
+    document.querySelectorAll('.downvote_btn').forEach((reduce_scores) => {
+        reduce_scores.addEventListener('click', (e) => {
+            let target_downvote_btn = e.target
+            let target_scores = target_downvote_btn.parentElement.parentElement.querySelector('.score')
+            // console.log(target_scores);
+
+            if (storedComment[target_downvote_btn.id].scores > 0) {
+                storedComment[target_downvote_btn.id].scores -= 1;
+
+                // Store updated scores
+                localStorage.setItem('comments', JSON.stringify(storedComment));
+                target_scores.textContent = storedComment[target_downvote_btn.id].scores
+            }
+        })
+    })
+
+    // Comment upvote scores
+    document.querySelectorAll('.upvote_btn_').forEach((add_scores) => {
+        add_scores.addEventListener('click', (e) => {
+            let target_upvote_btn = e.target
+            let target_scores = target_upvote_btn.parentElement.parentElement.querySelector('.score')
+
+            target_scores.textContent = Number(target_scores.textContent) + 1;
+        })
+    })
+
+    // Comment downvote scores
+    document.querySelectorAll('.downvote_btn_').forEach((reduce_scores) => {
+        reduce_scores.addEventListener('click', (e) => {
+            let target_downvote_btn = e.target
+            let target_scores = target_downvote_btn.parentElement.parentElement.querySelector('.score')
+            // console.log(target_scores);
+            if (Number(target_scores.textContent) > 0) {
+               target_scores.textContent = Number(target_scores.textContent) - 1 
+            }
+            
+        })
+    })
+}
+
+
 
 
 
