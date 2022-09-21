@@ -121,22 +121,23 @@ const displayContents = () => {
                             ${content.content}
                         </p>
                     </div>
-                </div>
-                <div class="mobile_view">
-                    <div class="scores_mobile">
-                        <div class="upvote">
-                            <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn_'>
+                    <div class="mobile_view">
+                        <div class="scores_mobile">
+                            <div class="upvote">
+                                <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn_'>
+                            </div>
+                            <p class="score">${content.score}</p>
+                            <div class="downvote">
+                                <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
+                            </div>
                         </div>
-                        <p class="score">${content.score}</p>
-                        <div class="downvote">
-                            <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
+                        <div class="reply_btn">
+                            <img src="./images/icon-reply.svg" alt="reply_btn" class="img_reply">
+                            <p>Reply</p>
                         </div>
                     </div>
-                    <div class="reply_btn">
-                        <img src="./images/icon-reply.svg" alt="reply_btn" class="img_reply">
-                        <p>Reply</p>
-                    </div>
                 </div>
+                
             </div>
             <div class="reply_form">
                 <form action="" class="form replyForm">
@@ -391,7 +392,7 @@ const toggleReplyForm = () => {
             // Target parent
             const parent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
 
-            // console.log(parent.id);
+            console.log(parent.id);
 
             // Target current reply-form-btn
             parent.querySelector('.reply_form').classList.toggle('visible')
@@ -446,7 +447,7 @@ const toggleReplyForm = () => {
                 })
             }
 
-            replies(parent)
+            // replies(parent)
             
         })
     })
