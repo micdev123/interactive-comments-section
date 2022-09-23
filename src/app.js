@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', () => {
     displayStoredComment();
     toggleReplyForm();
     displayReplies();
-    commentActions();
+    // commentActions();
 });
 
 const comments_container1 = document.querySelector('.original');
@@ -110,10 +110,9 @@ const displayContents = () => {
                             <p class="name">${content.user.username}</p>
                             <p class="date">${content.createdAt}</p>
                         </div>
-                        <div class="reply_btn">
-                            <img src="./images/icon-reply.svg" alt="reply_btn" class="img_reply">
-                            <p>Reply</p>
-                        </div>
+                        <p class="reply_btn">
+                            Reply
+                        </p>
                     </div>
                     <!-- Comment Body -->
                     <div class="comment_body">
@@ -131,22 +130,28 @@ const displayContents = () => {
                                 <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
                             </div>
                         </div>
-                        <div class="reply_btn">
-                            <img src="./images/icon-reply.svg" alt="reply_btn" class="img_reply">
-                            <p>Reply</p>
-                        </div>
+                        <p class="reply_btn">
+                            Reply
+                        </p>
                     </div>
                 </div>
                 
             </div>
+
+            <!-- Reply Form -->
             <div class="reply_form">
                 <form action="" class="form replyForm">
                     <img src=${data.currentUser.image.png} class="commenter img" alt="">
                     <!-- Textarea -->
                     <textarea name="" id="" placeholder="Write something..." class="reply_text" required ></textarea>
                     <button type="submit" class="reply__btn">Reply</button>
+                    <div class="mobile_view">
+                        <img src=${data.currentUser.image.png} class="commenter img" alt="">
+                        <button type="submit" class="reply__btn">Reply</button>
+                    </div>
                 </form>
             </div>
+
             <!-- Reply Container -->
             <div class="replies_container">
                 <div class="border"></div>
@@ -165,6 +170,7 @@ const displayContents = () => {
                                                 <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
                                             </div>
                                         </div>
+
                                         <div class="reply_content">
                                             <div class="reply_head">
                                                 <div>
@@ -172,39 +178,46 @@ const displayContents = () => {
                                                     <p class="name">${reply.user.username}</p>
                                                     <p class="date">${reply.createdAt}</p>
                                                 </div>
-                                                <div class="reply_btn">
-                                                    <img src="./images/icon-reply.svg" alt="reply_btn" class="img_reply">
-                                                    <p>Reply</p>
-                                                </div>
+                                                <p class="reply_btn">
+                                                    Reply
+                                                </p>
                                             </div>
+                                            <!-- Reply Body -->
                                             <div class="reply_body">
                                                 <p>
                                                     <span>@${reply.replyingTo}</span> ${reply.content}
                                                 </p>
                                             </div>
-                                        </div>
-                                        <div class="mobile_view">
-                                            <div class="scores_mobile">
-                                                <div class="upvote">
-                                                    <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn_'>
+
+                                            <!-- Reply Mobile View -->
+                                            <div class="mobile_view">
+                                                <div class="scores_mobile">
+                                                    <div class="upvote">
+                                                        <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn_'>
+                                                    </div>
+                                                    <p class="score">${content.score}</p>
+                                                    <div class="downvote">
+                                                        <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
+                                                    </div>
                                                 </div>
-                                                <p class="score">${content.score}</p>
-                                                <div class="downvote">
-                                                    <img src="./images/icon-minus.svg" alt="" class='downvote_btn_'>
-                                                </div>
+                                                <p class="reply_btn">
+                                                    Reply
+                                                </p>
                                             </div>
-                                            <div class="reply_btn">
-                                                <img src="./images/icon-reply.svg" alt="reply_btn" class="img_reply">
-                                                <p>Reply</p>
-                                            </div>
-                                        </div>  
+                                        </div> 
                                     </div>
+
+                                    <!-- Reply Form -->
                                     <div class="reply_form">
                                         <form action="" class="form replyForm">
                                             <img src=${data.currentUser.image.png} class="commenter img" alt="">
                                             <!-- Textarea -->
                                             <textarea name="" id="" placeholder="Write something..." class="reply_text" required></textarea>
                                             <button type="submit" class="reply__btn">Reply</button>
+                                            <div class="mobile_view">
+                                                <img src=${data.currentUser.image.png} class="commenter img" alt="">
+                                                <button type="submit" class="reply__btn">Reply</button>
+                                            </div>
                                         </form>
                                     </div>
                                     <div class="reply_container_new_new"></div>
@@ -278,8 +291,10 @@ const handleComment = () => {
                 localStorage.setItem('comments', JSON.stringify(storedComment));
 
                 textInput.value = '';
+
+                displayStoredComment()
             }
-            displayStoredComment()
+            
 
         }
         
@@ -316,11 +331,9 @@ const displayStoredComment = () => {
                         </div>
                         <div class="btns">
                             <p class="comment_delete" id=${index}>
-                                <img src="./images/icon-delete.svg" alt="delete_btn" class="img_btn">
                                 Delete
                             </p>
                             <p class="comment_edit" id=${index}>
-                                <img src="./images/icon-edit.svg" alt="edit_btn" class="img_btn">
                                 Edit
                             </p>
                         </div> 
@@ -352,11 +365,9 @@ const displayStoredComment = () => {
                         </div>
                         <div class="btns">
                             <p class="comment_delete" id=${index}>
-                                <img src="./images/icon-delete.svg" alt="delete_btn" class="img_btn">
                                 Delete
                             </p>
                             <p class="comment_edit" id=${index}>
-                                <img src="./images/icon-edit.svg" alt="edit_btn" class="img_btn">
                                 Edit
                             </p>
                         </div> 
@@ -380,7 +391,8 @@ const displayStoredComment = () => {
     // console.log(contents);
 
     comments_container2.innerHTML = contents
-
+    
+    commentActions()
 }
 
 
@@ -390,7 +402,7 @@ const toggleReplyForm = () => {
         toggleForm.addEventListener('click', (e) => {
             // console.log('test');
             // Target parent
-            const parent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement;
+            const parent = e.target.parentElement.parentElement.parentElement.parentElement;
 
             console.log(parent.id);
 
@@ -463,7 +475,10 @@ const displayReplies = () => {
         // console.log(parent_element);
         replies(parent_element)
         replyActions(parent_element)
+        
     })
+    
+    
 }
 
 
@@ -472,92 +487,84 @@ const replies = (parent) => {
     // Getting replies from the local storage
     const storedReplies = JSON.parse(localStorage.getItem('replies_for_' + parent.id)) || [];
     // console.log(storedReplies);
-
-    if (storedReplies.length > 0) {
-        let outputReplies = storedReplies.map((reply, index) => {
-            if (reply.replyingTo === parent.id) {
-                // Target parent child reply container to output replies
-                return`
-                <div class="reply" id=${reply.replyingTo}>
-                    <div class="reply_contents">
-                        <div class="scores_big">
-                            <div class="upvote">
-                                <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn' id=${index}>
-                            </div>
-                            <p class="score">${reply.scores}</p>
-                            <div class="downvote">
-                                <img src="./images/icon-minus.svg" alt="" class='downvote_btn' id=${index}>
-                            </div>
+    let outputReplies = storedReplies.map((reply, index) => {
+        if (reply.replyingTo == parent.id) {
+            // Target parent child reply container to output replies
+            return`
+            <div class="reply" id=${reply.replyingTo}>
+                <div class="reply_contents">
+                    <div class="scores_big">
+                        <div class="upvote">
+                            <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn' id=${index}>
                         </div>
-                        <div class="reply_content">
-                            <div class="reply_head">
-                                <div>
-                                    <img src=${reply.replierImg} alt="" class="img">
-                                    <p class="name">${reply.replierName} <span>You</span></p>
-                                    <p class="date">${reply.timestamps}</p>
-                                </div>
-                                <div class="btns">
-                                    <p class="reply_delete" id=${index}>
-                                        <img src="./images/icon-delete.svg" alt="delete_btn" class="img_btn">
-                                        Delete
-                                    </p>
-                                    <p class="reply_edit" id=${index}>
-                                        <img src="./images/icon-edit.svg" alt="edit_btn" class="img_btn">
-                                        Edit
-                                    </p>
-                                </div>
+                        <p class="score">${reply.scores}</p>
+                        <div class="downvote">
+                            <img src="./images/icon-minus.svg" alt="" class='downvote_btn' id=${index}>
+                        </div>
+                    </div>
+                    <div class="reply_content">
+                        <div class="reply_head">
+                            <div>
+                                <img src=${reply.replierImg} alt="" class="img">
+                                <p class="name">${reply.replierName} <span>You</span></p>
+                                <p class="date">${reply.timestamps}</p>
                             </div>
-                            <div class="reply_body">
-                                <p>
-                                    <span>@${reply.replyingTo}</span> ${reply.reply}
+                            <div class="btns">
+                                <p class="reply_delete" id=${index}>
+                                    Delete
+                                </p>
+                                <p class="reply_edit" id=${index}>
+                                    Edit
                                 </p>
                             </div>
+                        </div>
+                        <div class="reply_body">
+                            <p>
+                                <span>@${reply.replyingTo}</span> ${reply.reply}
+                            </p>
+                        </div>
 
-                            <div class="update_form">
-                                <form action="" class="form updateForm">
-                                    <!-- Textarea -->
-                                    <textarea name="" class="update_text" placeholder="Write something..."></textarea>
-                                    <input type="hidden" class="edited_content">
-                                    <button type="submit" class="update__btn">Update</button>
-                                </form>
-                            </div>
+                        <div class="update_form">
+                            <form action="" class="form updateForm">
+                                <!-- Textarea -->
+                                <textarea name="" class="update_text" placeholder="Write something..."></textarea>
+                                <input type="hidden" class="edited_content">
+                                <button type="submit" class="update__btn">Update</button>
+                            </form>
+                        </div>
 
-                            <div class="mobile_view">
-                                <div class="scores_mobile">
-                                    <div class="upvote">
-                                        <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn' id=${index}>
-                                    </div>
-                                    <span class="score">${reply.scores}</span>
-                                    <div class="downvote">
-                                        <img src="./images/icon-minus.svg" alt="" class='downvote_btn' id=${index}>
-                                    </div>
+                        <div class="mobile_view">
+                            <div class="scores_mobile">
+                                <div class="upvote">
+                                    <img src="./images/icon-plus.svg" alt="plus" class='upvote_btn' id=${index}>
                                 </div>
-                                <div class="btns">
-                                    <p class="reply_delete" id=${index}>
-                                        <img src="./images/icon-delete.svg" alt="delete_btn" class="img_btn">
-                                        Delete
-                                    </p>
-                                    <p class="reply_edit" id=${index}>
-                                        <img src="./images/icon-edit.svg" alt="edit_btn" class="img_btn">
-                                        Edit
-                                    </p>
+                                <span class="score">${reply.scores}</span>
+                                <div class="downvote">
+                                    <img src="./images/icon-minus.svg" alt="" class='downvote_btn' id=${index}>
                                 </div>
                             </div>
-                        </div>  
-                    </div>
-                </div>`
-            }
-        })
-
-        outputReplies = outputReplies.join('');
-
-        if (parent.classList.contains('comment')) {
-            parent.querySelector('.reply_container_new').innerHTML = outputReplies;
-        }  
-        else {
-            parent.querySelector('.reply_container_new_new').innerHTML = outputReplies;
-            
+                            <div class="btns">
+                                <p class="reply_delete" id=${index}>
+                                    Delete
+                                </p>
+                                <p class="reply_edit" id=${index}>
+                                    Edit
+                                </p>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>`
         }
+    })
+
+    outputReplies = outputReplies.join('');
+
+    if (parent.classList.contains('comment')) {
+        parent.querySelector('.reply_container_new').innerHTML = outputReplies;
+    }  
+    else {
+        parent.querySelector('.reply_container_new_new').innerHTML = outputReplies;
         
     }
     
@@ -643,6 +650,7 @@ const replyActions = (parent) => {
                 // Store updated replies
                 localStorage.setItem('replies_for_' + parent.id, JSON.stringify(storedReplies));
 
+                
                 // Set modal display to none
                 document.querySelector('.delete_modal').style.display = 'none'
 
@@ -707,7 +715,7 @@ const commentActions = () => {
             // console.log(target_comment_body);
 
             // Target current update-form
-            parent_container.querySelector('.update_form').classList.toggle('visible')
+            parent_container.querySelector('.update_form').classList.add('visible')
 
             if (parent_container.querySelector('.update_form').classList.contains('visible')) {
                 target_comment_body.style.display = 'none'

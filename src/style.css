@@ -201,30 +201,16 @@ body {
     font-weight: var(--font-weight_normal);
 }
 
+
+
 .reply_btn {
-    display: flex;
-    align-items: center;
-}
-
-.reply_btn:hover {
-    cursor: pointer;
-}
-
-.img_reply {
-    width: 0.8rem;
-    height: 0.8rem;
-    margin-right: 5px;
-}
-
-
-
-.reply_btn p {
     font-size: 0.8rem;
     font-weight: var(--font-weight_normal);
     color: var(--Moderate-blue);
+    cursor: pointer;
 }
 
-.mobile_view .reply_btn, .mobile_view .btns {
+.mobile_view .reply_btn, .mobile_view .reply__btn, .mobile_view .btns {
     display: none;
 }
 
@@ -317,16 +303,15 @@ body {
     cursor: pointer;
 }
 
-/* .delete:hover, .reply_edit:hover {
-    background-color: var(--Light-grayish-blue);
-    cursor: pointer;
-} */
-
-.img_btn {
-    width: 0.7rem;
-    height: 0.7rem;
-    margin-right: 5px;
+.reply_edit:hover,
+.comment_edit:hover, .reply_btn:hover {
+    color: var(--Light-grayish-blue);
 }
+
+.reply_delete:hover,  .comment_delete:hover {
+    color: var(--Pale-red);
+}
+
 
 .btns p {
     font-size: 0.8rem;
@@ -481,11 +466,12 @@ body {
         font-size: 0.85rem;
     }
 
-    .send, .commenter {
+    .send, .commenter, .reply__btn {
         display: none;
     }
 
-    .mobile_view .send, .mobile_view .commenter {
+    .mobile_view .send, .mobile_view .commenter,
+    .mobile_view .reply__btn {
         display: block;
     }
 
